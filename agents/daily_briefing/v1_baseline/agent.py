@@ -4,9 +4,6 @@ import anthropic
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Set agent name BEFORE tokenjam bootstrap
-os.environ["OTEL_SERVICE_NAME"] = "daily-briefing-agent-v1"
-
 from tokenjam.sdk import watch
 from tokenjam.sdk.integrations.anthropic import patch_anthropic
 from agents.daily_briefing.fetchers import (
