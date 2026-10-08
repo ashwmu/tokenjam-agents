@@ -5,7 +5,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # Set agent name BEFORE tokenjam bootstrap
-os.environ["OTEL_SERVICE_NAME"] = "daily-briefing-agent"
+os.environ["OTEL_SERVICE_NAME"] = "daily-briefing-agent-v2"
 
 from tokenjam.sdk import watch
 from tokenjam.sdk.integrations.anthropic import patch_anthropic
@@ -56,16 +56,22 @@ def generate_briefing(weather, news, calendar, tasks) -> str:
     response = client.messages.create(
         model="claude-opus-4-5",
         max_tokens=1000,
-        system=SYSTEM_PROMPT,
+        system=[
+            {
+                "type": "text",
+                "text": SYSTEM_PROMPT,
+                "cache_control": {"type": "ephemeral"}
+            }
+        ],
         messages=[{"role": "user", "content": user_content}]
     )
     return response.content[0].text
 
 
-@watch(agent_id="daily-briefing-agent")
+@watch(agent_id="daily-briefing-agent-v2")
 def run_briefing_agent():
     print(f"\n{'='*50}")
-    print(f"Daily Briefing — {datetime.now().strftime('%I:%M %p')}")
+    print(f"Daily Briefing v2 (cached) — {datetime.now().strftime('%I:%M %p')}")
     print('='*50)
 
     weather  = fetch_weather(os.getenv("CITY", "Washougal"))
