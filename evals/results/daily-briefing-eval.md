@@ -10,13 +10,13 @@ in a deterministic agent that doesn't need an LLM.
 
 ## Results
 
-| Version | Model | CACHE R | CACHE W | Cost | LLM Calls |
-|---|---|---|---|---|---|
-| v1_baseline | claude-opus-4-5 | 0 | 0 | $0.10 | 10 |
-| v2_cached | claude-sonnet-4-5 | 18.9k | 2.1k | $0.50* | 10 |
-| v3_scripted | none | N/A | N/A | $0.00 | 0 |
+| Version | Model | CACHE R | CACHE W | Cost (10 runs) | Cost/run | Savings | LLM Calls |
+|---|---|---|---|---|---|---|---|
+| v1_baseline | claude-opus-4-5 | 0 | 0 | $0.1002 | $0.0100 | baseline | 10 |
+| v2_cached | claude-sonnet-4-5 | 9.4k | 1.0k | $0.0696 | $0.0070 | 30% | 10 |
+| v3_scripted | none | N/A | N/A | $0.0000 | $0.0000 | 100% | 0 |
 
-*v2 cost includes multiple test runs during development
+Costs measured from last 10 clean traces per agent using tj traces.
 
 ## Key Findings
 
